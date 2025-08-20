@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Akash Kumar — Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-somehash" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    /* =========================
+       VARIABLES & RESET
+       ========================= */
+    :root{
+      --bg:#05060a;
+      --card:#0f1724;
+      --muted:#9aa7bd;
+      --text:#e6eef8;
+      --primary:#6d28d9;   /* purple */
+      --accent:#2563eb;    /* blue */
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --maxwidth:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text); background:linear-gradient(180deg,#03040a 0%, #071027 60%);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+
+    /* =========================
+       LAYOUT & COMMON
+       ========================= */
+    .container{ width:min(var(--maxwidth), 94%); margin:0 auto; }
+    header{ position:sticky; top:0; z-index:60; backdrop-filter: blur(8px) saturate(120%); background:rgba(3,6,12,0.45); border-bottom:1px solid rgba(255,255,255,0.04); }
+    .nav{ display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.9rem 0; }
+    .brand{ display:flex; align-items:center; gap:.75rem; }
+    .logo{ width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--primary)); box-shadow:0 10px 30px rgba(45,60,210,0.12); }
+    nav ul{ display:flex; gap:.5rem; list-style:none; margin:0; padding:0; align-items:center; }
+    nav a{ padding:.5rem .9rem; border-radius:10px; color:var(--muted); font-weight:600; transition:all .18s ease; }
+    nav a.active, nav a:hover{ color:var(--text); background:var(--glass) }
+
+    .menu-toggle{ display:none; background:none; border:0; color:var(--text); font-size:1.15rem }
+
+    /* =========================
+       HERO / HOME
+       ========================= */
+    .hero{
+      position:relative; padding:5.5rem 0 4.5rem; overflow:hidden;
+      background:
+        radial-gradient(600px 300px at 85% 10%, rgba(37,99,235,0.12), transparent 20%),
+        radial-gradient(500px 260px at 10% 90%, rgba(109,40,217,0.10), transparent 20%);
+    }
+    .hero-grid{ display:grid; grid-template-columns: 1fr 420px; gap:2rem; align-items:center; }
+    .intro-tag{ display:inline-block; padding:.35rem .8rem; border-radius:999px; background:rgba(255,255,255,0.03); color:var(--muted); font-weight:600; }
+    .hero-title{ font-size:clamp(1.8rem, 4vw, 3.2rem); margin:.6rem 0; line-height:1.05; }
+    .hero-desc{ color:#bfcfe6; max-width:56ch; margin-bottom:1rem; }
+    .cta-group{ display:flex; gap:.8rem; flex-wrap:wrap }
+
+    /* floating visual card */
+    .visual{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px; padding:1.1rem; border:1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 30px 60px rgba(3,6,12,0.6);
+    }
+    .orb{ position:absolute; border-radius:999px; filter:blur(36px); opacity:.6; animation:float 8s ease-in-out infinite; z-index:0; }
+    .orb.one{ width:160px; height:160px; top:-10%; right:10%; background:linear-gradient(135deg, rgba(37,99,235,0.35), rgba(109,40,217,0.25)); }
+    .orb.two{ width:240px; height:240px; bottom:-6%; left:-8%; background:linear-gradient(135deg, rgba(139,92,246,0.2), rgba(37,99,235,0.18)); animation-duration:14s; }
+    @keyframes float{ 0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)} }
+
+    /* =========================
+       SECTIONS
+       ========================= */
+    section{ padding:4rem 0; position:relative; }
+    .section-title{ font-size:1.6rem; margin:0 0 .3rem; font-weight:700; }
+    .section-sub{ color:var(--muted); margin-bottom:1.25rem; }
+
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:1rem; border:1px solid rgba(255,255,255,0.03); }
+
+    /* ABOUT */
+    .about-grid{ display:grid; grid-template-columns:360px 1fr; gap:1.3rem; align-items:center; }
+    .photo{ border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.04); }
+    .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+    /* SKILLS */
+    .skills-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; align-items:start; }
+    .skill{ grid-column: span 6; padding:1rem; border-radius:10px; display:flex; flex-direction:column; gap:.6rem; background:rgba(255,255,255,0.01); border:1px solid rgba(255,255,255,0.03); }
+    .skill h4{ margin:0; font-weight:700; font-size:1rem; color:var(--text); }
+    .skill .meta{ display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:.9rem; }
+    .bar{ height:10px; background:#0e1622; border-radius:999px; overflow:hidden; margin-top:.5rem; }
+    .bar > span{ display:block; height:100%; width:0; border-radius:999px; background:linear-gradient(90deg,var(--primary),var(--accent)); transition:width 1.2s cubic-bezier(.2,.9,.2,1); }
+
+    /* PROJECTS */
+    .projects-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:1rem; }
+    .project{ grid-column: span 4; display:flex; flex-direction:column; gap:.6rem; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.03); }
+    .project .thumb{ height:160px; overflow:hidden; }
+    .project .thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+    .project:hover .thumb img{ transform:scale(1.06) }
+    .project .body{ padding:1rem; display:flex; gap:.6rem; flex-direction:column; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); }
+    .tags{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.4rem; }
+    .tag{ padding:.25rem .55rem; border-radius:999px; background:rgba(255,255,255,0.03); font-size:.85rem; color:var(--muted); border:1px solid rgba(255,255,255,0.02) }
+
+    /* CONTACT */
+    .contact-grid{ display:grid; grid-template-columns:1fr 360px; gap:1rem; }
+    form{ display:grid; gap:.8rem; }
+    input,textarea{ width:100%; padding:.9rem; border-radius:10px; background:#071026; border:1px solid rgba(255,255,255,0.04); color:var(--text); outline:none; }
+    input:focus, textarea:focus{ box-shadow:0 6px 18px rgba(37,99,235,0.08); border-color:rgba(37,99,235,0.35) }
+    .error{ color:#ffb4b4; font-size:.9rem; display:none; }
+
+    .socials{ display:flex; gap:.6rem; margin-top:.8rem; flex-wrap:wrap }
+    .socials a{ width:46px; height:46px; display:grid; place-items:center; border-radius:10px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); color:var(--muted) }
+    .socials a:hover{ transform:translateY(-4px); color:var(--text) }
+
+    footer{ padding:2rem 0; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); text-align:center; font-size:.95rem }
+
+    /* reveal animation helper */
+    .reveal{ opacity:0; transform:translateY(18px); transition:all .7s cubic-bezier(.2,.9,.2,1); will-change:transform,opacity }
+    .reveal.visible{ opacity:1; transform:none }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+    @media (max-width:1000px){
+      .hero-grid{ grid-template-columns:1fr; }
+      .about-grid{ grid-template-columns:1fr; }
+      .skills-grid{ grid-template-columns:repeat(6,1fr); }
+      .project{ grid-column: span 6; }
+      .contact-grid{ grid-template-columns:1fr; }
+    }
+    @media (max-width:700px){
+      nav ul{ display:none; position:fixed; right:1rem; top:64px; background:rgba(3,6,12,0.9); padding:.6rem; border-radius:12px; flex-direction:column; min-width:180px; border:1px solid rgba(255,255,255,0.03) }
+      nav ul.open{ display:flex }
+      .menu-toggle{ display:inline-block }
+      .skills-grid{ grid-template-columns:repeat(12,1fr); }
+      .project{ grid-column:span 12 }
+      .skill{ grid-column:span 12 }
+    }
+
+    /* small niceties */
+    .muted{ color:var(--muted) }
+    .btn{ display:inline-flex; gap:.6rem; align-items:center; padding:.6rem 0.9rem; border-radius:10px; background:linear-gradient(90deg,var(--primary),var(--accent)); color:white; border:0; cursor:pointer; font-weight:700; }
+    .btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--text) }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"><img src="Akash_main.jpg.JPG" alt="logo profile  ">
+        <style> 
+          image { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+          .logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+          .logo { width: 30px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--primary)); box-shadow: 0 10px 30px rgba(45,60,210,0.12); }
+        </style></div>
+        
+        <div>
+          <div style="font-weight:700">Akash Kumar</div>
+          <div style="font-size:.82rem; color:var(--muted)">BCA Student • NIT</div>
+        </div>
+      </div>
+
+      <nav>
+        <button class="menu-toggle" aria-label="menu"><i class="fa-solid fa-bars"></i></button>
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO / HOME ========== -->
+  <section id="home" class="hero">
+    <div class="orb one" aria-hidden="true"></div>
+    <div class="orb two" aria-hidden="true"></div>
+
+    <div class="container hero-grid">
+      <div style="z-index:2">
+        <span class="intro-tag">Open to internships & freelancing</span>
+        <h1 class="hero-title">Hi, I'm <span style="color:var(--primary);">Akash Kumar</span><br /><small style="font-weight:600; color:var(--muted)">Student • Developer • Trader • Traveler</small></h1>
+        <p class="hero-desc">I'm a BCA student from Gopalganj, Bihar. I build modern web apps (Weather App, To-Do apps, eCommerce UI) and I love making interfaces that are fast, accessible, and delightful. I also do intraday trading and enjoy learning new tech stacks.</p>
+
+        <div class="cta-group">
+          <a href="#projects" class="btn"><i class="fa-solid fa-rocket"></i> View Projects</a>
+          <a href="#contact" class="btn ghost"><i class="fa-solid fa-envelope"></i> Contact Me</a>
+        </div>
+      </div>
+
+      <div class="visual card reveal" style="z-index:2">
+        <!-- Replace with a personal image or animated SVG if you like -->
+        <div style="display:flex; gap:1rem; align-items:center">
+          <div style="width:84px; height:84px; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.04)">
+            <img src="Akash_main.jpg.JPG" alt="Akash portrait">
+          </div>
+          <div>
+            <div style="font-weight:700">Akash Kumar</div>
+            <div class="muted" style="font-size:.95rem">BCA • Nalanda Institute of Technology</div>
+            <div style="margin-top:.45rem; color:var(--muted); font-size:.9rem">Gopalganj, Bihar •akash402244@gmail.com</div>
+          </div>
+        </div>
+
+        <hr style="border:none; height:1px; background:rgba(255,255,255,0.03); margin:1rem 0">
+
+        <div style="display:flex; gap:.6rem; flex-wrap:wrap;">
+          <div style="flex:1">
+            <div style="font-weight:700">Main focus</div>
+            <div class="muted"> Python scripting , Frontend Development,  Trading tools</div>
+          </div>
+          <div style="flex:1">
+            <div style="font-weight:700">Availability</div>
+            <div class="muted">Internships & Freelance</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about">
+    <div class="container">
+      <br>
+
+      <br>
+
+
+      <br>
+      <h2 class="section-title">About Me</h2> 
+      <p class="section-sub">Short introduction with photo and background.</p>
+      <div class="about-grid">
+        <div class="photo card reveal">
+          <!-- Replace src with your portrait image (high quality) -->
+          <img src="Profile.jpg" alt="Akash portrait">
+        </div>
+
+        <div class="reveal" style="display:flex; flex-direction:column; gap:.8rem;">
+          <p>My name is Akash Kumar. I'm currently pursuing BCA at Nalanda Institute of Technology. I started coding in school and gradually built multiple small apps — a Weather App, a To-Do list with animations, and an eCommerce UI for home decor called <strong>Sajawat &amp; Style</strong>. I enjoy solving problems with code, trading stocks during the day, and traveling when I get time.</p>
+
+          <p>Technologies I work with: HTML, CSS, JavaScript, Python, Kivy (mobile UI), Git, and basic backend concepts. I like clean UI, performance, and projects that help users.</p>
+
+          <div style="margin-top:.6rem">
+            <a class="btn" href="#projects"><i class="fa-solid fa-briefcase"></i> See Projects</a>
+            <a class="btn ghost" href="#" onclick="downloadCV(); return false;"><i class="fa-solid fa-file-arrow-down"></i> Download CV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <p class="section-sub">Progress bars show proficiency (animated on scroll).</p>
+
+      <div class="skills-grid">
+        <!-- Skill items: edit values in data-value attributes -->
+        <div class="skill reveal">
+          <h4>HTML &amp; CSS</h4>
+          <div class="meta"><span class="muted">Semantic markup & responsive design</span><strong>92%</strong></div>
+          <div class="bar"><span data-value="92%"></span></div>
+        </div>
+
+        <div class="skill reveal">
+          <h4>JavaScript</h4>
+          <div class="meta"><span class="muted">Vanilla JS & DOM</span><strong>86%</strong></div>
+          <div class="bar"><span data-value="86%"></span></div>
+        </div>
+
+        <div class="skill reveal">
+          <h4>Python</h4>
+          <div class="meta"><span class="muted">Scripting, Kivy for apps</span><strong>84%</strong></div>
+          <div class="bar"><span data-value="84%"></span></div>
+        </div>
+
+        <div class="skill reveal">
+          <h4>C &amp; C++</h4>
+          <div class="meta"><span class="muted">Competitive programming basics</span><strong>78%</strong></div>
+          <div class="bar"><span data-value="78%"></span></div>
+        </div>
+
+        <div class="skill reveal">
+          <h4>React (Basics)</h4>
+          <div class="meta"><span class="muted">Component-driven UI</span><strong>74%</strong></div>
+          <div class="bar"><span data-value="74%"></span></div>
+        </div>
+
+        <div class="skill reveal">
+          <h4>Trading (Intraday)</h4>
+          <div class="meta"><span class="muted">Technical analysis & execution</span><strong>88%</strong></div>
+          <div class="bar"><span data-value="88%"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects">
+    <div class="container">
+
+    <br>
+    <br>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-sub">Selected projects — descriptions & links to live/code.</p>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project card reveal">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Weather App">
+          </div>
+          <div class="body">
+            <h3 style="margin:0">Weather App (Kivy + Python)</h3>
+            <p class="muted" style="margin:0">Mobile & desktop weather application with modern UI, dark theme & API integration.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">Kivy</span><span class="tag">API</span></div>
+            <div style="margin-top:.6rem; display:flex; gap:.6rem;">
+              <a class="btn" href="#" target="_blank">Live</a>
+              <a class="btn ghost" href="#" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project card reveal">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" alt="To-Do App">
+          </div>
+          <div class="body">
+            <h3 style="margin:0">Advanced To-Do App</h3>
+            <p class="muted" style="margin:0">Standalone desktop app with animations, offline support, and keyboard shortcuts.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">GUI</span><span class="tag">Animations</span></div>
+            <div style="margin-top:.6rem; display:flex; gap:.6rem;">
+              <a class="btn" href="#" target="_blank">Live</a>
+              <a class="btn ghost" href="#" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project card reveal">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" alt="Sajawat & Style">
+          </div>
+          <div class="body">
+            <h3 style="margin:0">Sajawat &amp; Style (eCommerce UI)</h3>
+            <p class="muted" style="margin:0">Responsive product-selling website UI with add-to-cart and neat product cards.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
+            <div style="margin-top:.6rem; display:flex; gap:.6rem;">
+              <a class="btn" href="#" target="_blank">Live</a>
+              <a class="btn ghost" href="#" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="section-sub">Message me — I reply quickly.</p>
+      <div class="contact-grid">
+        <div class="card reveal">
+          <form id="contactForm" novalidate>
+            <div style="display:grid; gap:.7rem;">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required>
+
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project" required></textarea>
+
+              <div class="error" id="formError">Please fix errors above.</div>
+              <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+              <div class="muted" id="formSuccess" style="display:none; color:#bbf7d0">Message validated (demo). In production, this will send to email/backend.</div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="card reveal">
+          <h3 style="margin-top:0">Connect with me</h3>
+          <p class="muted">I'm active on these platforms. Click to visit (replace with your links).</p>
+
+          <div class="socials">
+                       <a href="https://github.com/whyakash02" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://twitter.com/yourusername" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://instagram.com/whyakash02" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Akash Kumar — All rights reserved.</p>
+      <p class="muted">Made with ❤️ using HTML, CSS & JS</p>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // Responsive nav toggle
+    const toggleBtn = document.querySelector('.menu-toggle');
+    const navList = document.querySelector('nav ul');
+    toggleBtn.addEventListener('click', () => {
+      navList.classList.toggle('open');
+    });
+
+    // Active link highlight on scroll
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 100;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute("id");
+        }
+      });
+      navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === "#" + current) {
+          link.classList.add("active");
+        }
+      });
+    });
+
+    // Skills progress bar animation
+    const revealElements = document.querySelectorAll(".reveal");
+    const skillBars = document.querySelectorAll(".bar > span");
+
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < windowHeight - 50) {
+          el.classList.add("visible");
+        }
+      });
+      skillBars.forEach(bar => {
+        const top = bar.getBoundingClientRect().top;
+        if (top < windowHeight - 50) {
+          bar.style.width = bar.dataset.value;
+        }
+      });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+
+    // Contact form validation demo
+    const form = document.getElementById("contactForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      form.querySelectorAll("input, textarea").forEach(input => {
+        if (!input.checkValidity()) {
+          valid = false;
+        }
+      });
+
+      document.getElementById("formError").style.display = valid ? "none" : "block";
+      document.getElementById("formSuccess").style.display = valid ? "block" : "none";
+    });
+
+    // Dummy CV download
+    function downloadCV() {
+      alert("CV download feature is a demo. Replace with actual CV file link.");
+    }
+  </script>
+</body>
+</html>
